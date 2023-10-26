@@ -36,4 +36,3 @@ Provides a fast in-memory database that supports JDBC API and R2DBC access, with
 
 Spring Data JPA SQL
 Persist data in SQL stores with Java Persistence API using Spring Data and Hibernate.
-
