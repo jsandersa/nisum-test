@@ -42,7 +42,7 @@ Persist data in SQL stores with Java Persistence API using Spring Data and Hiber
 ### Database
 does not require a script
 
-* [Browser IDE]("http://localhost:8080/h2-console")
+* [Browser IDE](http://localhost:8080/h2-console)
 
 click in connect button
 
