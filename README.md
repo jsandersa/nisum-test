@@ -20,9 +20,6 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.9+11-LTS-201, mixed mode, sharing)
 
 Maven:
 Apache Maven 3.9.5 (57804ffe001d7215b5e7bcb531cf83df38f93546)
-Maven home: C:\apache-maven-3.9.5
-Java version: 17.0.9, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-17
-Default locale: es_CL, platform encoding: Cp1252
 
 ### IDE: 
 IntelliJ IDEA 2023.2.3 (Community Edition)
