@@ -47,6 +47,7 @@ does not require a script
 click in connect button
 
 ### API Documentation
+* [Browser Docs](http://localhost:8080/doc/swagger-ui/index.html)
 * [Browser docs](http://localhost:8080/doc/swagger-ui/index.html)
 
 ### Developed
