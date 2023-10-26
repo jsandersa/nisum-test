@@ -24,12 +24,12 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.9+11-LTS-201, mixed mode, sharing)
 Maven:
 Apache Maven 3.9.5 (57804ffe001d7215b5e7bcb531cf83df38f93546)
 
-### IDE: 
+### IDE
 IntelliJ IDEA 2023.2.3 (Community Edition)
 Build #IC-232.10072.27, built on October 11, 2023
 Runtime version: 17.0.8.1+7-b1000.32 amd64
 
-### Librarys:
+### Librarys
 Spring Web WEB
 Build web, including RESTful, applications using Spring MVC. Uses Apache Tomcat as the default embedded container.
 
