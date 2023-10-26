@@ -46,6 +46,8 @@ Browser IDE
 
 link: http://localhost:8080/h2-console
 
+### API Documentation
+link: http://localhost:8080/doc/swagger-ui/index.html
 
 ### Developed
 Jorge F. Sanders Álvarez
