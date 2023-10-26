@@ -75,13 +75,13 @@ public class UserController {
     }
   }
 
-  @PutMapping(value = "{id}")
-  public ResponseEntity<Map<String, Object>> updateUser(@PathVariable("id") UUID id, @RequestBody User user) {
+//  @PutMapping(value = "{id}")
+  @PutMapping
+  public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user) {
     Map<String, Object> response = new HashMap<>();
-    Optional<User> userOpt = Optional.ofNullable(userService.getById(id));
-    if (userOpt != null) {
+    if (user != null) {
       User userEmail = userService.existsEmail(user.getEmail());
-      if (userEmail != null) {
+      if (userEmail != null && !user.getEmail().equals(userEmail.getEmail())) {
         response.put("data", null);
         response.put("mensaje", String.format("Error: e-mail %s is already! - Status: %s", user.getEmail(), HttpStatus.CONFLICT));
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
@@ -93,16 +93,10 @@ public class UserController {
         response.put("mensaje", String.format("Error: e-mail: %s is invalid! - Status: %s", user.getEmail(), HttpStatus.BAD_REQUEST));
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
       }
-      /*
-      response.put("mensaje", String.format("User success actualized! - Status: %s", HttpStatus.CREATED));
-      response.put("data", userService.update(user));
-      return new ResponseEntity<>(response, HttpStatus.OK);
-
-       */
     }
-    response.put("mensaje", String.format("User %s updated successfully! - Status: %s", HttpStatus.CREATED));
+    response.put("mensaje", String.format("User %s updated successfully! - Status: %s", user.getName(), HttpStatus.CREATED));
     response.put("data", userService.create(user));
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @DeleteMapping(value = "{id}")
