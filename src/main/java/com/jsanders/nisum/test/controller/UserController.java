@@ -83,7 +83,7 @@ public class UserController {
       Optional<User> userOpt = Optional.ofNullable(userService.getById(user.getId()));
     } catch (Exception e) {
       response.put("data", null);
-      response.put("mensaje", String.format("Error: ID %s not found! - Status: %s", user.getId(), HttpStatus.CONFLICT));
+      response.put("mensaje", String.format("Error: ID %s not found! - Status: %s", user.getId(), HttpStatus.NOT_FOUND));
       return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
