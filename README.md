@@ -10,6 +10,7 @@
 Api RESTfull with Spring Boot 3.0.12
 JavaSE-17 
 SDK-17
+OpenAPI v3
 
 ### Tools
 Java:
