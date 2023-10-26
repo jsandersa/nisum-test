@@ -22,12 +22,12 @@ Maven home: C:\apache-maven-3.9.5
 Java version: 17.0.9, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-17
 Default locale: es_CL, platform encoding: Cp1252
 
-IDE:
+###IDE: 
 IntelliJ IDEA 2023.2.3 (Community Edition)
 Build #IC-232.10072.27, built on October 11, 2023
 Runtime version: 17.0.8.1+7-b1000.32 amd64
 
-Librarys:
+### Librarys:
 Spring Web WEB
 Build web, including RESTful, applications using Spring MVC. Uses Apache Tomcat as the default embedded container.
 
