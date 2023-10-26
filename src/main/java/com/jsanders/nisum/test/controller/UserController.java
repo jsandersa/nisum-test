@@ -75,7 +75,6 @@ public class UserController {
     }
   }
 
-//  @PutMapping(value = "{id}")
   @PutMapping
   public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user) {
     Map<String, Object> response = new HashMap<>();
