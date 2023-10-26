@@ -22,7 +22,7 @@ public class TestApplication {
             .info(new Info()
                     .title("NISUM - Spring Boot v.3 API")
                     .version("1.0")
-                    .description("Test development by Jorge Sanders A. in OpenAPI v.3")
+                    .description("Test developed by Jorge Sanders A. in OpenAPI v.3")
                     .termsOfService("http://swagger.io/terms")
                     .license(new License().name("Apache 2.0")
                             .url("http://spring.org")));
