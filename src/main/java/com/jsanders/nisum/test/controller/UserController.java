@@ -22,7 +22,6 @@ public class UserController {
 
   @Value("${nisum.regexp}")
   private String regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-  //Pattern pattern = Pattern.compile(emailRegex);
   Pattern pattern = Pattern.compile(regexp);
 
   public void setPattern(Pattern pattern) {
@@ -78,6 +77,15 @@ public class UserController {
   @PutMapping
   public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user) {
     Map<String, Object> response = new HashMap<>();
+
+    try {
+      Optional<User> userOpt = Optional.ofNullable(userService.getById(user.getId()));
+    } catch (Exception e) {
+      response.put("data", null);
+      response.put("mensaje", String.format("Error: ID %s not found! - Status: %s", user.getId(), HttpStatus.CONFLICT));
+      return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     if (user != null) {
       User userEmail = userService.existsEmail(user.getEmail());
       if (userEmail != null && !user.getEmail().equals(userEmail.getEmail())) {
