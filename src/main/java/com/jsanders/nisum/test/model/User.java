@@ -27,7 +27,8 @@ public class User {
   @UpdateTimestamp
   private LocalDateTime modified;
   @CreationTimestamp
-  private LocalDateTime lastlogin;
+  @Column(name = "last_login")
+  private LocalDateTime lastLogin;
 
   @JsonManagedReference
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
@@ -102,12 +103,12 @@ public class User {
     this.modified = modified;
   }
 
-  public LocalDateTime getLastlogin() {
-    return lastlogin;
+  public LocalDateTime getLastLogin() {
+    return lastLogin;
   }
 
-  public void setLastlogin(LocalDateTime lastlogin) {
-    this.lastlogin = lastlogin;
+  public void setLastLogin(LocalDateTime lastLogin) {
+    this.lastLogin = lastLogin;
   }
 
 }
