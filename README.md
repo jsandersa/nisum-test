@@ -39,7 +39,7 @@
 #### _Once the project is downloaded and executed, access the database and API documentation, using the following links._
 
 
-  **Browser IDE:**
+  **Database IDE:**
   
   - [H2 Database](http://localhost:8080/h2-console)
     
