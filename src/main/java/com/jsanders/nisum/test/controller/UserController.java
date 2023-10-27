@@ -55,7 +55,6 @@ public class UserController {
   public ResponseEntity<User> createUser(@RequestBody User user) {
     user.setToken(UUID.randomUUID());
     validateUser(user);
-    //return new ResponseEntity<>(userService.create(user), HttpStatus.OK);
     return ResponseEntity.ok(userService.create(user));
   }
 
@@ -66,7 +65,6 @@ public class UserController {
 
   @GetMapping(value = "{id}")
   public ResponseEntity<User> getUserById(@PathVariable("id") UUID id) {
-//      return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     return ResponseEntity.ok(userService.getById(id));
   }
 
@@ -74,7 +72,6 @@ public class UserController {
   public ResponseEntity<User> updateUser(@PathVariable("id") UUID id, @RequestBody User user) {
     check(user.getId().equals(id), "object ID mismatch");
     validateUser(user);
-//    return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     return ResponseEntity.ok(userService.update(user));
   }
 
