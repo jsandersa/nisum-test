@@ -34,20 +34,78 @@
 - Spring Data JPA (SQL): Persist data in SQL stores with Java Persistence API using Spring Data and Hibernate.
 
 ### Database
-No script required
+    No script required
+#### _Once the project is downloaded and executed, access the database and API documentation, using the following links._
 
-**Browser IDE:**
-- Link: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-- Click the "Connect" button
+  **Browser IDE:**
+  - [H2 Database](http://localhost:8080/h2-console)
+    ![](./images/ViewDatabaseBrowser.png)
+  Click the "Connect" button
 
 ### API Documentation
-- Link: [http://localhost:8080/doc/swagger-ui/index.html](http://localhost:8080/doc/swagger-ui/index.html)
+- [Swagger-ui](http://localhost:8080/doc/swagger-ui/index.html)
+  ![](./images/SwaggerBrowser.png)
 
 ### Diagram
 
 ![Diagram](./images/d2.png)
 
+**Examples**
+- POST
 
+      {
+          "name": "name",
+          "email": "email@nisum.com",
+          "password": "min-length-8",
+          "phones": []
+      }
+
+  or also, add a phone number
+
+      {
+          "name": "name",
+          "email": "email@nisum.com",
+          "password": "min-length-8",
+          "phones": [
+              {
+                  "number": 1,
+                  "citycode": 2,
+                  "countrycode": 3
+              }
+          ]
+      }
+   
+
+# 
+- PUT
+
+        input ID user parameter
+
+        {
+            "id": "0a441907-1b8e-4180-870d-17c79d5637f6",
+            "name": "name *** MODIFIED ***",
+            "email": "email@nisum.com",
+            "password": "min-length-8",
+            "token": "7673650b-65fb-42b1-8117-33d2e8221ea2",
+            "created": "2023-10-27T11:54:47.657212",
+            "modified": "2023-10-27T11:43:56.4364721",
+            "lastlogin": "2023-10-27T11:43:47.658215",
+            "phones": [
+                {
+                    "id": 1,
+                    "number": 1,
+                    "citycode": 2,
+                    "countrycode": 3
+                }
+            ]
+        }
+#
+  - GET(one) / DELETE
+
+        input ID user parameter
+
+
+#
 ### Developed by
 - Jorge F. Sanders Álvarez
 - Email: lordsanders@gmail.com

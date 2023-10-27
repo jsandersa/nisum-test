@@ -44,9 +44,20 @@ public class UserController {
     return pattern.matcher(text).matches();
   }
 
-  void validateUser(User user) {
+  void checkEmailUpdate(User user) {
+    User emailUser = userService.getById(user.getId());
+    if (emailUser != null && !emailUser.getEmail().equals(user.getEmail())) {
+      check(!userService.existsEmail(user.getEmail()), "e-mail address already registered");
+    }
+  }
+
+  void validateUser(User user, boolean update) {
     check(user != null, "user object is null");
-    check(!userService.existsEmail(user.getEmail()), "e-mail address already registered");
+    if (update) {
+      checkEmailUpdate(user);
+    } else {
+      check(validPattern(emailPattern, user.getEmail()), "invalid email '%s'", user.getEmail());
+    }
     check(validPattern(emailPattern, user.getEmail()), "invalid email '%s'", user.getEmail());
     check(validPattern(passwordPattern, user.getPassword()), "invalid password");
   }
@@ -54,7 +65,7 @@ public class UserController {
   @PostMapping
   public ResponseEntity<User> createUser(@RequestBody User user) {
     user.setToken(UUID.randomUUID());
-    validateUser(user);
+    validateUser(user, false);
     return ResponseEntity.ok(userService.create(user));
   }
 
@@ -71,7 +82,7 @@ public class UserController {
   @PutMapping(value = "{id}")
   public ResponseEntity<User> updateUser(@PathVariable("id") UUID id, @RequestBody User user) {
     check(user.getId().equals(id), "object ID mismatch");
-    validateUser(user);
+    validateUser(user, true);
     return ResponseEntity.ok(userService.update(user));
   }
 
