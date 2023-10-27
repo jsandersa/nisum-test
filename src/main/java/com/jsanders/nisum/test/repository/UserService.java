@@ -37,9 +37,9 @@ public class UserService {
 
   public User update(User userUpdate) {
     User user = userRepository.findById(userUpdate.getId()).get();
-    user.setPassword(userUpdate.getPassword());
     user.setName(userUpdate.getName());
     user.setPassword(userUpdate.getPassword());
+    user.setEmail(userUpdate.getEmail());
     user.setModified(LocalDateTime.now());
     return userRepository.save(user);
   }

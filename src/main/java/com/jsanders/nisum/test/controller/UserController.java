@@ -4,7 +4,6 @@ import com.jsanders.nisum.test.model.User;
 import com.jsanders.nisum.test.repository.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,6 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-//  private String regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
   Pattern emailPattern;
   Pattern passwordPattern;
 
@@ -57,7 +55,8 @@ public class UserController {
   public ResponseEntity<User> createUser(@RequestBody User user) {
     user.setToken(UUID.randomUUID());
     validateUser(user);
-    return new ResponseEntity<>(userService.create(user), HttpStatus.OK);
+    //return new ResponseEntity<>(userService.create(user), HttpStatus.OK);
+    return ResponseEntity.ok(userService.create(user));
   }
 
   @GetMapping
@@ -67,14 +66,16 @@ public class UserController {
 
   @GetMapping(value = "{id}")
   public ResponseEntity<User> getUserById(@PathVariable("id") UUID id) {
-      return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
+//      return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
+    return ResponseEntity.ok(userService.getById(id));
   }
 
   @PutMapping(value = "{id}")
   public ResponseEntity<User> updateUser(@PathVariable("id") UUID id, @RequestBody User user) {
     check(user.getId().equals(id), "object ID mismatch");
     validateUser(user);
-    return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
+//    return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
+    return ResponseEntity.ok(userService.update(user));
   }
 
   @DeleteMapping(value = "{id}")

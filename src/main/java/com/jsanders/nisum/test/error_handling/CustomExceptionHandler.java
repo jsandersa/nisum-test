@@ -37,6 +37,4 @@ public class CustomExceptionHandler {
     CustomErrorResponse errorResponse = new CustomErrorResponse(message);
     return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
-
-  // Handle other exceptions as needed
 }
