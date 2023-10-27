@@ -40,13 +40,17 @@
 
 
   **Browser IDE:**
+  
   - [H2 Database](http://localhost:8080/h2-console)
+    
     ![](./images/ViewDatabaseBrowser.png)
 
     Click the "Connect" button
 
   **API documentation:**
+  
 - [Swagger-ui](http://localhost:8080/doc/swagger-ui/index.html)
+  
   ![](./images/SwaggerBrowser.png)
 
 ### Diagram
