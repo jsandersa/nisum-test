@@ -35,7 +35,9 @@
 
 ### Database
     No script required
+
 #### _Once the project is downloaded and executed, access the database and API documentation, using the following links._
+
 
   **Browser IDE:**
   - [H2 Database](http://localhost:8080/h2-console)
@@ -43,7 +45,7 @@
 
     Click the "Connect" button
 
-### API Documentation
+  **API documentation:**
 - [Swagger-ui](http://localhost:8080/doc/swagger-ui/index.html)
   ![](./images/SwaggerBrowser.png)
 
