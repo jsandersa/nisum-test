@@ -52,7 +52,7 @@ Email: lordsanders@gmail.com
 
 | Version | Major | Minor |
 |:-------:|:-----:|:-----:|
-| 1 | 0 | 0 |
+|    1    |   0   |   0   |
 
 ### Categories
 - RESTful API with Spring Boot 3.0.12
