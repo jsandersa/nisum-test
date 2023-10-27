@@ -8,116 +8,78 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.jsanders.nisum.test.error_handling.Validator.check;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = "application/json")
 @ResponseBody
 public class UserController {
+
+  Logger logger = LoggerFactory.getLogger(UserController.class);
+
   @Autowired
   private UserService userService;
 
-  @Value("${nisum.regexp}")
-  private String regexp = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-  //Pattern pattern = Pattern.compile(emailRegex);
-  Pattern pattern = Pattern.compile(regexp);
+//  private String regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+  Pattern emailPattern;
+  Pattern passwordPattern;
 
-  public void setPattern(Pattern pattern) {
-    this.pattern = pattern;
+  @Autowired
+  public void setEmailPattern(@Value("${user.email.regexp}") String userEmailRegexp) {
+    logger.info("userEmailRegexp: {}", userEmailRegexp);
+    emailPattern = Pattern.compile(userEmailRegexp);
+  }
+
+  @Autowired
+  public void setPasswordPattern(@Value("${user.password.regexp}") String userPasswordRegexp) {
+    logger.info("userPasswordRegexp: {}", userPasswordRegexp);
+    passwordPattern = Pattern.compile(userPasswordRegexp);
+  }
+
+  boolean validPattern(Pattern pattern, String text) {
+    return pattern.matcher(text).matches();
+  }
+
+  void validateUser(User user) {
+    check(user != null, "user object is null");
+    check(!userService.existsEmail(user.getEmail()), "e-mail address already registered");
+    check(validPattern(emailPattern, user.getEmail()), "invalid email '%s'", user.getEmail());
+    check(validPattern(passwordPattern, user.getPassword()), "invalid password");
   }
 
   @PostMapping
-  public ResponseEntity<Map<String, Object>> createUser(@RequestBody User user) {
+  public ResponseEntity<User> createUser(@RequestBody User user) {
     user.setToken(UUID.randomUUID());
-    Map<String, Object> response = new HashMap<>();
-
-    User userEmail = userService.existsEmail(user.getEmail());
-    if (userEmail != null) {
-      response.put("data", null);
-      response.put("mensaje", String.format("Error: e-mail %s already exists! - Status: %s", user.getEmail(), HttpStatus.CONFLICT));
-      return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-    }
-
-    Matcher matcher = pattern.matcher(user.getEmail());
-    if (!matcher.matches()) {
-      response.put("data", null);
-      response.put("mensaje", String.format("Error: e-mail %s is invalid! - Status: %s", user.getEmail(), HttpStatus.BAD_REQUEST));
-      return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-    response.put("mensaje", String.format("User %s created successfully! - Status: %s", user.getName(), HttpStatus.CREATED));
-    response.put("data", userService.create(user));
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
+    validateUser(user);
+    return new ResponseEntity<>(userService.create(user), HttpStatus.OK);
   }
 
   @GetMapping
-  public ResponseEntity<Map<String, Object>> getAllUsers() {
-    Map<String, Object> response = new HashMap<>();
-    List<User> users = userService.getAll();
-    response.put("data", users);
-    response.put("mensaje", String.format("%s users recovered! - Status: %s", users.size(), HttpStatus.OK));
-    return new ResponseEntity<>(response, HttpStatus.OK);
+  public ResponseEntity<List<User>> getAllUsers() {
+    return ResponseEntity.ok(userService.getAll());
   }
 
   @GetMapping(value = "{id}")
-  public ResponseEntity<Map<String, Object>> getUserById(@PathVariable("id") UUID id) {
-    Map<String, Object> response = new HashMap<>();
-    try {
-      response.put("data", userService.getById(id));
-      response.put("mensaje", String.format("ID '%s' found! - Staus: %s", id, HttpStatus.FOUND));
-      return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (Exception e) {
-      response.put("data", null);
-      response.put("mensaje", String.format("Error: ID '%s' not found! - Staus: %s", id, HttpStatus.NOT_FOUND));
-      return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
+  public ResponseEntity<User> getUserById(@PathVariable("id") UUID id) {
+      return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
   }
 
-  @PutMapping
-  public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user) {
-    Map<String, Object> response = new HashMap<>();
-    if (user != null) {
-      User userEmail = userService.existsEmail(user.getEmail());
-      if (userEmail != null && !user.getEmail().equals(userEmail.getEmail())) {
-        response.put("data", null);
-        response.put("mensaje", String.format("Error: e-mail %s is already! - Status: %s", user.getEmail(), HttpStatus.CONFLICT));
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-      }
-
-      Matcher matcher = pattern.matcher(user.getEmail());
-      if (!matcher.matches()) {
-        response.put("data", null);
-        response.put("mensaje", String.format("Error: e-mail: %s is invalid! - Status: %s", user.getEmail(), HttpStatus.BAD_REQUEST));
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-      }
-    }
-    response.put("mensaje", String.format("User %s updated successfully! - Status: %s", user.getName(), HttpStatus.CREATED));
-    response.put("data", userService.create(user));
-    return new ResponseEntity<>(response, HttpStatus.OK);
+  @PutMapping(value = "{id}")
+  public ResponseEntity<User> updateUser(@PathVariable("id") UUID id, @RequestBody User user) {
+    check(user.getId().equals(id), "object ID mismatch");
+    validateUser(user);
+    return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
   }
 
   @DeleteMapping(value = "{id}")
-  public ResponseEntity<Map<String, Object>> deleteUserById(@PathVariable("id") UUID id) {
-    Map<String, Object> response = new HashMap<>();
-
-    User user = userService.getById(id);
-    if (user == null) {
-      response.put("data", null);
-      response.put("mensaje", String.format("Error: ID '%s' not found! - Staus: %s", id, HttpStatus.NOT_FOUND));
-      return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    try {
-      userService.delete(id);
-      response.put("data", HttpStatus.NO_CONTENT);
-      response.put("mensaje", String.format("ID '%s' deleted! - Staus: %s", id, HttpStatus.OK));
-      return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (Exception e) {
-      response.put("data", null);
-      response.put("mensaje", String.format("Error: ID '%s' not found! - Staus: %s", id, HttpStatus.INTERNAL_SERVER_ERROR));
-      return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public ResponseEntity<Object> deleteUserById(@PathVariable("id") UUID id) {
+    userService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }

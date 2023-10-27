@@ -29,12 +29,14 @@ IntelliJ IDEA 2023.2.3 (Community Edition)
 Build #IC-232.10072.27, built on October 11, 2023
 Runtime version: 17.0.8.1+7-b1000.32 amd64
 
-### Librarys
-Spring Web WEB
-Build web, including RESTful, applications using Spring MVC. Uses Apache Tomcat as the default embedded container.
+### Libraries
+**Spring Web WEB** - Build web, including RESTful, applications using Spring MVC.
+Uses Apache Tomcat as the default embedded container.
 
 H2 Database SQL
-Provides a fast in-memory database that supports JDBC API and R2DBC access, with a small (2mb) footprint. Supports embedded and server modes as well as a browser based console application.
+
+Provides a fast in-memory database that supports JDBC API
+and R2DBC access, with a small (2mb) footprint. Supports embedded and server modes as well as a browser based console application.
 
 Spring Data JPA SQL
 Persist data in SQL stores with Java Persistence API using Spring Data and Hibernate.
@@ -53,3 +55,4 @@ click in connect button
 Jorge F. Sanders Álvarez
 lordsanders@gmail.com
 
+![Diagram](./images/d2.png)
