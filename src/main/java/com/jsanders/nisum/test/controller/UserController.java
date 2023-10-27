@@ -58,7 +58,6 @@ public class UserController {
     } else {
       check(validPattern(emailPattern, user.getEmail()), "invalid email '%s'", user.getEmail());
     }
-    check(validPattern(emailPattern, user.getEmail()), "invalid email '%s'", user.getEmail());
     check(validPattern(passwordPattern, user.getPassword()), "invalid password");
   }
 
