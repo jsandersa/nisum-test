@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-public class User {
+public class User implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,20 +40,8 @@ public class User {
           })
   private List<Phone> phones;
 
-  public List<Phone> getPhones() {
-    return phones;
-  }
-
-  public void setPhones(List<Phone> phones) {
-    this.phones = phones;
-  }
-
   public UUID getId() {
     return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -79,20 +68,12 @@ public class User {
     this.password = password;
   }
 
-  public UUID getToken() {
-    return token;
-  }
-
   public void setToken(UUID token) {
     this.token = token;
   }
 
   public LocalDateTime getCreated() {
     return created;
-  }
-
-  public void setCreated(LocalDateTime created) {
-    this.created = created;
   }
 
   public LocalDateTime getModified() {
@@ -106,9 +87,4 @@ public class User {
   public LocalDateTime getLastLogin() {
     return lastLogin;
   }
-
-  public void setLastLogin(LocalDateTime lastLogin) {
-    this.lastLogin = lastLogin;
-  }
-
 }

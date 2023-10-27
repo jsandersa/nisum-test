@@ -23,32 +23,16 @@ public class Phone {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public Integer getNumber() {
     return number;
-  }
-
-  public void setNumber(Integer number) {
-    this.number = number;
   }
 
   public Integer getCitycode() {
     return citycode;
   }
 
-  public void setCitycode(Integer citycode) {
-    this.citycode = citycode;
-  }
-
   public Integer getCountrycode() {
     return countrycode;
-  }
-
-  public void setCountrycode(Integer countrycode) {
-    this.countrycode = countrycode;
   }
 
 }
