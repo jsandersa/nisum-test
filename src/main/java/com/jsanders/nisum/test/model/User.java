@@ -72,6 +72,10 @@ public class User implements Serializable {
     this.token = token;
   }
 
+  public UUID getToken() {
+    return token;
+  }
+
   public LocalDateTime getCreated() {
     return created;
   }
