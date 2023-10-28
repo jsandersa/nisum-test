@@ -18,7 +18,7 @@ public class TestApplication {
   public OpenAPI miOpenApi() {
     return new OpenAPI()
             .info(new Info()
-                    .title("NISUM - Spring Boot v.3 API")
+                    .title("Nisum - Spring Boot v.3 API")
                     .version("1.0")
                     .description("Test developed by Jorge Sanders A. in OpenAPI v.3")
                     .termsOfService("http://swagger.io/terms")
