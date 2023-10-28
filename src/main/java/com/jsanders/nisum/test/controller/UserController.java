@@ -23,10 +23,14 @@ public class UserController {
   Logger logger = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
-  private UserService userService;
+  private final UserService userService;
 
   Pattern emailPattern;
   Pattern passwordPattern;
+
+  public UserController(UserService userService) {
+    this.userService = userService;
+  }
 
   @Autowired
   public void setEmailPattern(@Value("${user.email.regexp}") String userEmailRegexp) {
