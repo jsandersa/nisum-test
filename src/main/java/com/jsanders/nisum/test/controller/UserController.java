@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import static com.jsanders.nisum.test.error_handling.Validator.check;
 
 @RestController
-@RequestMapping(value = "/api/users", produces = "application/json")
+@RequestMapping(value = "/api/users", produces = "application/json", consumes = "application/json")
 @ResponseBody
 public class UserController {
 
